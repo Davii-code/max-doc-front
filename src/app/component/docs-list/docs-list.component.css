@@ -74,3 +74,18 @@ tbody td {
 .button-add button {
   margin: 5px;
 }
+
+
+.custom-modal .mat-dialog-container {
+  padding: 0; /* Remover padding extra do modal */
+  background-color: #f9f9f9; /* Alterar a cor de fundo do modal */
+  border-radius: 12px; /* Bordas mais arredondadas para um visual mais moderno */
+}
+
+.custom-modal .mat-dialog-content {
+  padding: 20px;
+}
+
+.custom-modal .mat-dialog-actions {
+  padding: 20px;
+}

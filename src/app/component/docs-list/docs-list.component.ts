@@ -15,9 +15,10 @@ import {DocListService} from '../../service/doc-list.service';
 import {DocEditComponent} from '../doc-edit/doc-edit.component';
 import {MatButton, MatIconButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
-import {CurrencyPipe} from '@angular/common';
+import {CurrencyPipe, SlicePipe} from '@angular/common';
 import {MatCheckbox} from '@angular/material/checkbox';
 import {SelectionModel} from '@angular/cdk/collections';
+import {DocCreateComponent} from '../doc-create/doc-create.component';
 
 @Component({
   selector: 'app-docs-list',
@@ -36,7 +37,8 @@ import {SelectionModel} from '@angular/cdk/collections';
     MatHeaderCellDef,
     MatTable,
     MatButton,
-    MatCheckbox
+    MatCheckbox,
+    SlicePipe
   ],
   templateUrl: './docs-list.component.html',
   standalone: true,
@@ -92,11 +94,45 @@ export class DocsListComponent implements OnInit{
     });
   }
 
+  exportCSV(){
+    const selectedIds = this.selection.selected.map(item => item.id);
+    this.servico.exportDocuments(selectedIds).subscribe((blob: Blob) => {
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'exported_data.csv';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+    });
+  }
+
+  onFileSelected(event: any) {
+    const file: File = event.target.files[0];
+
+    if (file) {
+      this.uploadCsvFile(file);
+    }
+  }
+
+  uploadCsvFile(file: File) {
+    this.servico.uploadCsvFile(file).subscribe({
+      next: (response) => {
+        console.log("Upload bem-sucedido:", response);
+      },
+      error: (err) => {
+        console.error("Erro no upload:", err);
+      }
+    });
+  }
 
 
   openDialogAdicionar() {
-    const dialogRef = this.dialog.open(DocEditComponent, {
+    const dialogRef = this.dialog.open(DocCreateComponent, {
       width: '700px',
+      maxWidth: '90vw',
+      panelClass: 'custom-modal',
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -112,6 +148,16 @@ export class DocsListComponent implements OnInit{
 
     dialogRef.afterClosed().subscribe(result => {
       this.recarregar();
+    });
+  }
+
+  executeDelete(doc: any) {
+    this.servico.deleteDocument(doc.id).subscribe({
+      next: value => {
+        this.recarregar();
+      },
+      error: error => {
+      }
     });
   }
 }

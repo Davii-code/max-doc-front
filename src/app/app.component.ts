@@ -5,10 +5,11 @@ import {MatIcon} from '@angular/material/icon';
 import {MatIconButton} from '@angular/material/button';
 import {MatToolbar} from '@angular/material/toolbar';
 import {SidnavConteudoComponent} from './component/sidnav-conteudo/sidnav-conteudo.component';
+import {SimpleNotificationsModule} from "angular2-notifications";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, MatSidenavContainer, MatIcon, MatIconButton, MatToolbar, MatSidenav, SidnavConteudoComponent,MatSidenavContent],
+  imports: [RouterOutlet, MatSidenavContainer, MatIcon, MatIconButton, MatToolbar, MatSidenav, SidnavConteudoComponent,MatSidenavContent, SimpleNotificationsModule],
   templateUrl: './app.component.html',
   standalone: true,
   styleUrl: './app.component.css'

@@ -2,8 +2,9 @@
   <div class="button-add">
     <button mat-raised-button color="primary" (click)="openDialogAdicionar()">Adicionar +</button>
   </div>
-  <button mat-raised-button color="primary" >Importa CSV +</button>
-  <button mat-raised-button color="primary" >Exporta CSV +</button>
+  <input type="file" #fileInput (change)="onFileSelected($event)" accept=".csv" style="display: none">
+  <button mat-raised-button color="primary" (click)="fileInput.click()">Importar CSV</button>
+  <button mat-raised-button color="primary" (click)="exportCSV()">Exporta CSV +</button>
 </div>
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
   <ng-container matColumnDef="select">
@@ -34,7 +35,7 @@
 
   <ng-container matColumnDef="description">
     <th mat-header-cell *matHeaderCellDef> Descrição </th>
-    <td mat-cell *matCellDef="let element"> {{element.description  }} </td>
+    <td mat-cell *matCellDef="let element"> {{element.description | slice:0:100 }} </td>
   </ng-container>
 
   <ng-container matColumnDef="version">
@@ -57,7 +58,7 @@
     <th mat-header-cell *matHeaderCellDef> Ações </th>
     <td mat-cell *matCellDef="let element">
       <button mat-icon-button (click)="openDialogEditar(element)"><mat-icon>edit</mat-icon></button>
-      <button mat-icon-button ><mat-icon>delete</mat-icon></button>
+      <button mat-icon-button (click)="executeDelete(element)" ><mat-icon>delete</mat-icon></button>
     </td>
   </ng-container>
 
@@ -70,3 +71,5 @@
                [pageSizeOptions]="pageSizeOptions"
                aria-label="Select page">
 </mat-paginator>
+
+

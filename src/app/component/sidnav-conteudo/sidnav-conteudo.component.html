@@ -6,17 +6,14 @@
   </div>
 </div>
 <mat-nav-list>
-  <a mat-list-item routerLink='/dashboard' routerLinkActive="active-link" #rlaDashboard="routerLinkActive"  >
+  <a mat-list-item routerLink='/home' routerLinkActive="active-link" #rlaDashboard="routerLinkActive">
+    <mat-icon matListItemIcon>view_list</mat-icon>
+    <span>Documents</span>
+  </a>
+  <a mat-list-item routerLink='/' routerLinkActive="active-link" #rlaDashboard="routerLinkActive"  >
     <mat-icon matListItemIcon>dashboard</mat-icon>
-    <span>Dashboard</span>
+    <span>---</span>
   </a>
 
-  <a mat-list-item routerLink='/' routerLinkActive="active-link" #rlaDashboard="routerLinkActive">
-    <mat-icon matListItemIcon>view_list</mat-icon>
-    <span>Invoice</span>
-  </a>
-  <a mat-list-item routerLink='/analytics' routerLinkActive="active-link" #rlaDashboard="routerLinkActive">
-    <mat-icon matListItemIcon>analytics</mat-icon>
-    <span>Analytics</span>
-  </a>
+
 </mat-nav-list>

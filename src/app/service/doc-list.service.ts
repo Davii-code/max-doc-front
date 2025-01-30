@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 
 @Injectable({
@@ -14,8 +14,44 @@ export class DocListService {
   }
 
   private baseUrl = "http://localhost:8081/api/v1/documents";
+  private uploadUrl = "http://localhost:8081/api/v1/upload";
 
-  getAll():Observable<any[]>{
-    return this.http.get<any[]>(this.baseUrl)
+  getAll(): Observable<any[]> {
+    return this.http.get<any[]>(this.baseUrl);
+  }
+
+  deleteDocument(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${id}`);
+  }
+
+  createDocument(document: any): Observable<any> {
+    return this.http.post<any>(this.baseUrl, document);
+  }
+
+  updateDocument(id: string, document: any): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}/${id}`, document);
+  }
+
+  submitDocument(id: string): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/${id}/submit`, {});
+  }
+
+  obsoleteDocument(id: string): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/${id}/obsolete`, {});
+  }
+
+  createNewVersion(id: string): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/${id}/newVersion`, {});
+  }
+
+  exportDocuments(documentIds: string[]): Observable<Blob> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.post<Blob>(`${this.baseUrl}/export`, documentIds, { responseType: 'blob' as 'json' });
+  }
+
+  uploadCsvFile(file: File): Observable<any> {
+    const formData = new FormData();
+    formData.append('file', file);
+    return this.http.post<any>(this.uploadUrl, formData);
   }
 }

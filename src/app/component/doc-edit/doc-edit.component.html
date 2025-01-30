@@ -1,1 +1,39 @@
-<p>doc-edit works!</p>
+<section class="teste">
+  <h1 class="titulo">Editar Documento</h1>
+  <mat-divider></mat-divider>
+</section>
+<form [formGroup]="documentForm" class="document-form">
+  <mat-form-field appearance="fill">
+    <mat-label>Título</mat-label>
+    <input matInput formControlName="title"/>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Descrição</mat-label>
+    <textarea matInput formControlName="description"></textarea>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Versão</mat-label>
+    <input matInput formControlName="version" type="number"  />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Sigla</mat-label>
+    <input matInput formControlName="abbreviation"  />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Fase</mat-label>
+    <mat-select formControlName="stage" >
+      <mat-option value="MINUTA">MINUTA</mat-option>
+      <mat-option value="APROVADO">APROVADO</mat-option>
+      <mat-option value="OBSOLETO">OBSOLETO</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div class="form-buttons">
+    <button mat-raised-button color="primary" type="submit" [disabled]="!documentForm.valid">Salvar</button>
+    <button mat-raised-button color="warn" type="button" (click)="dialogRef.close()">Cancelar</button>
+  </div>
+</form>

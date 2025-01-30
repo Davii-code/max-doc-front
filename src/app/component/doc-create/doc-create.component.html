@@ -1,0 +1,54 @@
+<section class="teste">
+  <h1 class="titulo">Criar Documento</h1>
+  <mat-divider></mat-divider>
+</section>
+
+<form [formGroup]="documentForm" (ngSubmit)="onSubmit()" class="document-form">
+  <mat-form-field appearance="fill">
+    <mat-label>Título</mat-label>
+    <input matInput formControlName="title" [readonly]="!isMinutaPhase" required>
+    <mat-error *ngIf="documentForm.get('title')?.hasError('required')">
+      Título é obrigatório.
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Descrição</mat-label>
+    <textarea matInput formControlName="description" [readonly]="!isMinutaPhase" required></textarea>
+    <mat-error *ngIf="documentForm.get('description')?.hasError('required')">
+      Descrição é obrigatória.
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Versão</mat-label>
+    <input matInput type="number" formControlName="version" required>
+    <mat-error *ngIf="documentForm.get('version')?.hasError('required')">
+      Versão é obrigatória.
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Sigla</mat-label>
+    <input matInput formControlName="abbreviation" required>
+    <mat-error *ngIf="documentForm.get('abbreviation')?.hasError('required')">
+      Sigla é obrigatória.
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" >
+    <mat-label>Fase</mat-label>
+    <mat-select formControlName="stage" required [disabled]="true">
+      <mat-option value="MINUTA">MINUTA</mat-option>
+      <mat-option value="APROVADO">APROVADO</mat-option>
+      <mat-option value="OBSOLETO">OBSOLETO</mat-option>
+    </mat-select>
+    <mat-error *ngIf="documentForm.get('stage')?.hasError('required')">
+      Fase é obrigatória.
+    </mat-error>
+  </mat-form-field>
+
+  <div class="form-buttons">
+    <button mat-raised-button color="primary" type="submit" [disabled]="documentForm.invalid">Salvar</button>
+  </div>
+</form>

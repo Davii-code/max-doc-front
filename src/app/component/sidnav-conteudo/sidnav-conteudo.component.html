@@ -1,0 +1,22 @@
+<div class="sidenav-header">
+  <img [width]="profilePicSize()" [height]="profilePicSize()" src="/MaxDoxIMG.jpg">
+  <div class="header-text" [class.hide-header-text]="sidenavCollapsed()">
+    <h2>Max Doc</h2>
+    <p>Davi Faria</p>
+  </div>
+</div>
+<mat-nav-list>
+  <a mat-list-item routerLink='/dashboard' routerLinkActive="active-link" #rlaDashboard="routerLinkActive"  >
+    <mat-icon matListItemIcon>dashboard</mat-icon>
+    <span>Dashboard</span>
+  </a>
+
+  <a mat-list-item routerLink='/' routerLinkActive="active-link" #rlaDashboard="routerLinkActive">
+    <mat-icon matListItemIcon>view_list</mat-icon>
+    <span>Invoice</span>
+  </a>
+  <a mat-list-item routerLink='/analytics' routerLinkActive="active-link" #rlaDashboard="routerLinkActive">
+    <mat-icon matListItemIcon>analytics</mat-icon>
+    <span>Analytics</span>
+  </a>
+</mat-nav-list>

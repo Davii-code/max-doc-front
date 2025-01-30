@@ -1,0 +1,26 @@
+.mat-sidenav-content {
+  transition: margin-left 0.3s;
+  padding: 16px;
+}
+
+mat-toolbar{
+  position: relative;
+  z-index: 5;
+}
+
+mat-sidenav-container{
+  height: calc(100vh - 64px);
+}
+
+
+mat-toolbar {
+  position: relative;
+  z-index: 5;
+  background: #6cb0dc;
+  box-shadow: 4px 0 6px rgba(0, 0, 0, 0.5);
+}
+
+.sidnav {
+  background:  #6cb0dc;
+  color: #333333;
+}

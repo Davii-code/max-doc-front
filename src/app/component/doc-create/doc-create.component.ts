@@ -9,6 +9,7 @@ import {MatInput} from '@angular/material/input';
 import {MatDivider} from '@angular/material/divider';
 import {DocListService} from '../../service/doc-list.service';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {NotificationsService} from 'angular2-notifications';
 
 @Component({
   selector: 'app-doc-create',
@@ -31,7 +32,7 @@ export class DocCreateComponent implements OnInit{
   isMinutaPhase: boolean = true;
   protected dialogRef!: MatDialogRef<any>;
 
-  constructor(private fb: FormBuilder, private servico: DocListService,
+  constructor(private fb: FormBuilder, private servico: DocListService, private notificationsService: NotificationsService,
   private dialog: MatDialog,
   private dialogRefCurrent: MatDialogRef<any>) { }
 
@@ -52,7 +53,7 @@ export class DocCreateComponent implements OnInit{
       formValues.creationDate = new Date().toISOString();
       formValues.updateDate = new Date().toISOString();
       this.servico.createDocument(formValues).subscribe(doc => {
-        console.log("Documento criado:", formValues);
+        this.notificationsService.success("Documento criado com sucesso!");
       })
     }
     this.dialogRef.afterClosed().subscribe(value => {

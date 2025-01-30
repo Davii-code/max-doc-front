@@ -15,10 +15,16 @@ import {DocListService} from '../../service/doc-list.service';
 import {DocEditComponent} from '../doc-edit/doc-edit.component';
 import {MatButton, MatIconButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
-import {CurrencyPipe, SlicePipe} from '@angular/common';
+import {CurrencyPipe, NgForOf, SlicePipe} from '@angular/common';
 import {MatCheckbox} from '@angular/material/checkbox';
 import {SelectionModel} from '@angular/cdk/collections';
 import {DocCreateComponent} from '../doc-create/doc-create.component';
+import {NotificationsService} from 'angular2-notifications';
+import {MatFormField} from '@angular/material/form-field';
+import {MatInput} from '@angular/material/input';
+import {FormsModule} from '@angular/forms';
+import {MatOption} from '@angular/material/core';
+import {MatLabel, MatSelect} from '@angular/material/select';
 
 @Component({
   selector: 'app-docs-list',
@@ -38,7 +44,13 @@ import {DocCreateComponent} from '../doc-create/doc-create.component';
     MatTable,
     MatButton,
     MatCheckbox,
-    SlicePipe
+    SlicePipe,
+    MatFormField,
+    MatInput,
+    FormsModule,
+    MatOption,
+    MatSelect,
+    NgForOf,MatLabel
   ],
   templateUrl: './docs-list.component.html',
   standalone: true,
@@ -54,12 +66,30 @@ export class DocsListComponent implements OnInit{
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private servico: DocListService, public dialog: MatDialog) {
+  constructor(private servico: DocListService, public dialog: MatDialog, private notificationsService: NotificationsService) {
     this.dataSource = new MatTableDataSource<any>();
   }
 
   ngOnInit() {
     this.recarregar()
+  }
+
+  filters = {
+    title: '',
+    description: '',
+    abbreviation: '',
+    stage: ''
+  };
+
+  stages = ['','MINUTA', 'VIGENTE', 'OBSOLETO']; // Adapte conforme seu enum
+
+  applyFilter() {
+    this.servico.filterDocuments(this.filters).subscribe((documents) => {
+      console.log(documents);
+      this.dataSource.data = documents;
+    },error => {
+      console.log(this.filters);
+    });
   }
 
   selection = new SelectionModel<any>(true, []);
@@ -105,6 +135,10 @@ export class DocsListComponent implements OnInit{
       a.click();
       document.body.removeChild(a);
       window.URL.revokeObjectURL(url);
+      this.notificationsService.success("Exportado com sucesso!");
+    },error => {
+      console.log(error)
+      this.notificationsService.error("Erro ao exporta selecione os documentos! ");
     });
   }
 
@@ -119,10 +153,10 @@ export class DocsListComponent implements OnInit{
   uploadCsvFile(file: File) {
     this.servico.uploadCsvFile(file).subscribe({
       next: (response) => {
-        console.log("Upload bem-sucedido:", response);
+        this.notificationsService.success("Importado com sucesso!");
       },
-      error: (err) => {
-        console.error("Erro no upload:", err);
+      error: (error) => {
+        this.notificationsService.success("Erro ao importa! ", error.error.message);
       }
     });
   }
@@ -142,7 +176,7 @@ export class DocsListComponent implements OnInit{
 
   openDialogEditar(any:any) {
     const dialogRef = this.dialog.open(DocEditComponent, {
-      width: '700px',
+      width: '900px',
       data: any
     });
 
@@ -154,9 +188,11 @@ export class DocsListComponent implements OnInit{
   executeDelete(doc: any) {
     this.servico.deleteDocument(doc.id).subscribe({
       next: value => {
+        this.notificationsService.success("Deletado sucesso!");
         this.recarregar();
       },
       error: error => {
+        this.notificationsService.error("Erro ao Deletar", error.error.message);
       }
     });
   }

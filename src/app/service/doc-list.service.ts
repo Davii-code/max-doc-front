@@ -54,4 +54,9 @@ export class DocListService {
     formData.append('file', file);
     return this.http.post<any>(this.uploadUrl, formData);
   }
+
+  filterDocuments(filters: any): Observable<Document[]> {
+    return this.http.get<Document[]>(`${this.baseUrl}/filter`, { params: filters });
+  }
+
 }

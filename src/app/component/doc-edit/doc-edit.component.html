@@ -2,7 +2,7 @@
   <h1 class="titulo">Editar Documento</h1>
   <mat-divider></mat-divider>
 </section>
-<form [formGroup]="documentForm" class="document-form">
+<form [formGroup]="documentForm"  class="document-form">
   <mat-form-field appearance="fill">
     <mat-label>Título</mat-label>
     <input matInput formControlName="title"/>
@@ -27,13 +27,16 @@
     <mat-label>Fase</mat-label>
     <mat-select formControlName="stage" >
       <mat-option value="MINUTA">MINUTA</mat-option>
-      <mat-option value="APROVADO">APROVADO</mat-option>
+      <mat-option value="VIGENTE">VIGENTE</mat-option>
       <mat-option value="OBSOLETO">OBSOLETO</mat-option>
     </mat-select>
   </mat-form-field>
 
   <div class="form-buttons">
-    <button mat-raised-button color="primary" type="submit" [disabled]="!documentForm.valid">Salvar</button>
+    <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!documentForm.valid">Salvar</button>
     <button mat-raised-button color="warn" type="button" (click)="dialogRef.close()">Cancelar</button>
+    <button mat-raised-button color="primary" (click)="submitDocument()">Submeter Documento</button>
+    <button mat-raised-button color="warn" (click)="obsoleteDocument()">Obsoletar Documento</button>
+    <button mat-raised-button color="primary" (click)="createNewVersion()">Criar Nova Versão</button>
   </div>
 </form>

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
 
 @Injectable({
@@ -16,8 +16,12 @@ export class DocListService {
   private baseUrl = "http://localhost:8081/api/v1/documents";
   private uploadUrl = "http://localhost:8081/api/v1/upload";
 
-  getAll(): Observable<any[]> {
-    return this.http.get<any[]>(this.baseUrl);
+  getAll(order: string, direction: string): Observable<any[]> {
+    const params = new HttpParams()
+      .set('orderBy', order)
+      .set('direction', direction);
+
+    return this.http.get<any[]>(`${this.baseUrl}`, { params });
   }
 
   deleteDocument(id: string): Observable<void> {

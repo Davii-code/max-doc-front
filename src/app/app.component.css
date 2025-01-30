@@ -16,11 +16,11 @@ mat-sidenav-container{
 mat-toolbar {
   position: relative;
   z-index: 5;
-  background: #6cb0dc;
+  background: #a5ceee;
   box-shadow: 4px 0 6px rgba(0, 0, 0, 0.5);
 }
 
 .sidnav {
-  background:  #6cb0dc;
+  background:#a5ceee;
   color: #333333;
 }

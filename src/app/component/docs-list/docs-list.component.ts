@@ -118,7 +118,10 @@ export class DocsListComponent implements OnInit{
 
   recarregar() {
     this.dataSource.data = [];
-    this.servico.getAll().subscribe((valor) => {
+    const orderBy = 'creationDate';
+    const direction = 'desc';
+
+    this.servico.getAll(orderBy, direction).subscribe((valor) => {
       this.dataSource.data = valor;
       this.dataSource.paginator = this.paginator;
     });

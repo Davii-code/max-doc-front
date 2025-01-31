@@ -85,10 +85,9 @@ export class DocsListComponent implements OnInit{
 
   applyFilter() {
     this.servico.filterDocuments(this.filters).subscribe((documents) => {
-      console.log(documents);
       this.dataSource.data = documents;
     },error => {
-      console.log(this.filters);
+      this.notificationsService.success("Erro ao filtrar");
     });
   }
 
